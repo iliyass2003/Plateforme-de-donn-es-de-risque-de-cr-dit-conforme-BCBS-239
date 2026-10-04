@@ -1,0 +1,28 @@
+# ---------- Secrets (BCBS 239 - P11) ----------
+.env
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# ---------- Données : jamais dans Git ----------
+data/
+
+# ---------- Python ----------
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# ---------- dbt (fichiers générés) ----------
+dbt/**/target/
+dbt/**/logs/
+dbt/**/dbt_packages/
+
+# ---------- Airflow (journaux) ----------
+airflow/logs/
+
+# ---------- Système et éditeur ----------
+.DS_Store
+Thumbs.db
+.vscode/
