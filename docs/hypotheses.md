@@ -1,3 +1,4 @@
+
 # Registre des hypothèses
 
 Ce registre liste toutes les règles adoptées lorsque les données ne fournissent pas directement une information. Chaque hypothèse est appliquée de façon unique et citée dans le code qui l'implémente.
@@ -5,6 +6,7 @@ Ce registre liste toutes les règles adoptées lorsque les données ne fournisse
 | Version | Date | Modification |
 | --- | --- | --- |
 | 1.0 | 2026-10-04 | Création du registre (H1 à H8) |
+| 1.1 | 2026-10-04 | Mise à jour après lecture du dictionnaire : H2, H3, H6, ajout de H9 |
 
 ## H1 — Jour de référence T0
 
@@ -18,17 +20,17 @@ Ce registre liste toutes les règles adoptées lorsque les données ne fournisse
 
 - **Énoncé :** `MONTHS_BALANCE = -n` correspond à l'arrêté de fin de mois situé n mois avant T0 (-1 → 30/11/2025 ; -24 → 31/12/2023). Les 24 derniers arrêtés sont traités.
 - **Justification :** reproduire un traitement mensuel réel avec les données existantes.
-- **Limite :** l'historique antérieur à 24 mois n'est pas exploité.
+- **Limite :** l'historique antérieur à 24 mois n'est pas exploité. Le mois 0 (information au moment de la demande, souvent identique à -1) est exclu des arrêtés ; à confirmer au profilage.
 - **Application :** zone landing (découpage par arrêté) et couche silver.
 - **Statut :** validée.
 
 ## H3 — Devise
 
-- **Énoncé :** tous les montants sont exprimés en MAD par convention.
+- **Énoncé :** tous les montants internes sont exprimés en MAD par convention.
 - **Justification :** la devise n'est pas précisée dans le jeu de données.
-- **Limite :** aucune.
-- **Application :** documentation des colonnes de montant.
-- **Statut :** validée.
+- **Limite :** les crédits du bureau externe sont exprimés dans plusieurs devises recodées (`CREDIT_CURRENCY`). Seuls les montants dans la devise majoritaire sont agrégés ; les autres sont signalés. À confirmer au profilage.
+- **Application :** documentation des colonnes de montant ; staging du bureau.
+- **Statut :** validée pour les montants internes ; à vérifier pour le bureau (Lot 2).
 
 ## H4 — Marché de référence macroéconomique
 
@@ -42,7 +44,7 @@ Ce registre liste toutes les règles adoptées lorsque les données ne fournisse
 
 - **Énoncé :** la valeur 365 243 est remplacée par une valeur vide et l'indicateur `est_sans_emploi` est mis à vrai.
 - **Justification :** 365 243 jours (1 000 ans) est un code technique, non une ancienneté réelle.
-- **Limite :** à confirmer par croisement avec le type de revenu.
+- **Limite :** à confirmer par croisement avec le type de revenu ; la même valeur peut apparaître dans des colonnes `DAYS_*` de previous_application.
 - **Application :** couche silver, staging des demandes.
 - **Statut :** à vérifier au profilage (Lot 2).
 
@@ -51,6 +53,7 @@ Ce registre liste toutes les règles adoptées lorsque les données ne fournisse
 - **Énoncé :** un contrat est en défaut lorsqu'il présente plus de 90 jours de retard.
 - **Justification :** définition du défaut de la réglementation bâloise et seuil par défaut d'IFRS 9.
 - **Limite :** choix entre `SK_DPD` et `SK_DPD_DEF` à arrêter après profilage.
+- **Attention :** la variable `TARGET` du jeu de données n'est pas ce défaut. Elle signale un retard de plus de X jours sur l'une des Y premières échéances, X et Y n'étant pas communiqués. Les deux notions ne doivent jamais être confondues dans le reporting.
 - **Application :** couche gold, table d'exposition mensuelle.
 - **Statut :** à vérifier au profilage (Lot 2).
 
@@ -66,6 +69,14 @@ Ce registre liste toutes les règles adoptées lorsque les données ne fournisse
 
 - **Énoncé :** encours d'une carte = `AMT_BALANCE` ; encours d'un prêt = `CNT_INSTALMENT_FUTURE` × `AMT_ANNUITY`.
 - **Justification :** le capital restant dû des prêts n'est pas fourni.
-- **Limite :** les mensualités incluant des intérêts, l'encours des prêts est légèrement surestimé.
+- **Limite :** les mensualités incluant des intérêts, l'encours des prêts est légèrement surestimé. Pour les cartes, `AMT_RECEIVABLE_PRINCIPAL` est une alternative à évaluer au profilage.
 - **Application :** couche silver (`int_expositions_mensuelles`).
 - **Statut :** validée.
+
+## H9 — Demandes passées devenues contrats
+
+- **Énoncé :** seules les demandes passées au statut « Approved » sont considérées comme des contrats. En cas de doublon, seule la dernière demande par contrat est conservée (`FLAG_LAST_APPL_PER_CONTRACT = 'Y'` et `NFLAG_LAST_APPL_IN_DAY = 1`).
+- **Justification :** une demande peut être refusée, annulée ou non utilisée, et le dictionnaire signale des doublons de saisie.
+- **Limite :** valeurs exactes des indicateurs à vérifier au profilage.
+- **Application :** couche silver, staging des demandes passées.
+- **Statut :** à vérifier au profilage (Lot 2).
