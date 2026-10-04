@@ -63,4 +63,10 @@ Les données ne sont pas incluses dans ce dépôt (volume et conditions d'utilis
 
 ## Auteur
 
-Ton Prénom Nom — [LinkedIn](https://www.linkedin.com/in/ton-profil)
+meliani iliyass — [LinkedIn](https://www.linkedin.com/in/meliani-ilyass)
+
+
+<!-- lot 0 :
+github
+le registre des hypothèses:Les données réelles ne contiennent jamais tout ce dont on a besoin. Quand il manque une information, on choisit une règle, on l'écrit, on la justifie, et on l'applique partout de la même façon. Ce choix écrit s'appelle une hypothèse.
+identifiant, énoncé, justification, limite, où elle s'applique, statut (« validée » ou « à vérifier au profilage »). -->

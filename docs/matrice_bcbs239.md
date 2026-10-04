@@ -9,7 +9,7 @@ Correspondance entre les principes BCBS 239 (Comité de Bâle, 2013) et leur mis
 | Principe | Exigence dans le projet | Lot | Preuve | Statut |
 | --- | --- | --- | --- | --- |
 | P1 Gouvernance | Propriétaires désignés, politique qualité écrite | 0 | `docs/gouvernance.md` | Fait |
-| P2 Architecture et infrastructure | Architecture en couches, dictionnaire unique, identifiants cohérents | 0, 5 | | À faire |
+| P2 Architecture et infrastructure | Architecture en couches, dictionnaire unique, identifiants cohérents | 0, 5 | `docs/architecture.md`, `docs/dictionnaire_sources.md` | En cours |
 | P3 Exactitude et intégrité | Réconciliation automatique, empreintes SHA-256 | 2, 6 | | À faire |
 | P4 Exhaustivité | Contrôles de complétude à chaque couche | 3, 6 | | À faire |
 | P5 Actualité | Arrêté traité en moins de 2 heures, relançable à la demande | 7 | | À faire |
