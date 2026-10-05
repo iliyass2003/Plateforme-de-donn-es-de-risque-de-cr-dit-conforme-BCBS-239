@@ -21,7 +21,8 @@ services:
     restart: "no"
 
   minio:
-    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    # Image communautaire : l'image officielle n'est plus distribuée (voir docs/decisions.md, ADR-001)
+    image: pgsty/minio:RELEASE.2026-08-04T00-00-00Z
     container_name: crdp_minio
     command: server /data --console-address ":9001"
     environment:
@@ -33,7 +34,7 @@ services:
     volumes:
       - minio_data:/data
     healthcheck:
-      test: ["CMD", "mc", "ready", "local"]
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 10s
       timeout: 5s
       retries: 5
