@@ -80,3 +80,4 @@ Ce registre liste toutes les règles adoptées lorsque les données ne fournisse
 - **Limite :** valeurs exactes des indicateurs à vérifier au profilage.
 - **Application :** couche silver, staging des demandes passées.
 - **Statut :** à vérifier au profilage (Lot 2).
+

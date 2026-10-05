@@ -1,0 +1,8 @@
+# Tous les fichiers texte sont stockés et extraits en LF (format Linux),
+# car ils sont lus par des conteneurs Linux.
+* text=auto eol=lf
+
+# Fichiers binaires : jamais convertis
+*.png binary
+*.pbix binary
+*.parquet binary
