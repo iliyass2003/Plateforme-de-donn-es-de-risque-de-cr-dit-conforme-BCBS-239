@@ -26,3 +26,5 @@ airflow/logs/
 .DS_Store
 Thumbs.db
 .vscode/
+# Plans Terraform enregistrés
+tfplan

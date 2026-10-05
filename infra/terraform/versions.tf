@@ -6,5 +6,9 @@ terraform {
       source  = "aminueza/minio"
       version = "~> 3.0"
     }
+    postgresql = {
+      source  = "cyrilgdn/postgresql"
+      version = "~> 1.25"
+    }
   }
 }
