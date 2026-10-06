@@ -1,1 +1,5 @@
 kaggle>=1.6
+duckdb>=1.1
+pandas>=2.2
+numpy>=1.26
+python-dotenv>=1.0
