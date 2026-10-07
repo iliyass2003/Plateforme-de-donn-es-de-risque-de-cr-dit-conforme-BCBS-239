@@ -7,6 +7,7 @@ Ce registre liste toutes les règles adoptées lorsque les données ne fournisse
 | --- | --- | --- |
 | 1.0 | 2026-10-04 | Création du registre (H1 à H8) |
 | 1.1 | 2026-10-04 | Mise à jour après lecture du dictionnaire : H2, H3, H6, ajout de H9 |
+| 1.2 | 2026-10-07 | Décisions après profilage (docs/profilage.md) : H2, H3, H5, H6, H9 validées ; ajout de H10 et H11 |
 
 ## H1 — Jour de référence T0
 
@@ -81,3 +82,30 @@ Ce registre liste toutes les règles adoptées lorsque les données ne fournisse
 - **Application :** couche silver, staging des demandes passées.
 - **Statut :** à vérifier au profilage (Lot 2).
 
+
+## Décisions après profilage (version 1.2)
+
+Source : `docs/profilage.md`, données complètes.
+
+| Hypothèse | Résultat mesuré | Décision |
+| --- | --- | --- |
+| H2 | Historique jusqu'à 96 mois ; mois 0 présent uniquement dans bureau_balance (610 965 lignes) | Validée : 24 arrêtés, mois 0 exclu |
+| H3 | currency 1 = 1 715 020 crédits sur 1 716 428 | Validée : agrégation de currency 1, autres devises signalées |
+| H5 | 365243 : 55 352 retraités et 22 sans-emploi, aucun autre type de revenu | Validée |
+| H6 | SK_DPD > 90 : 119 118 lignes ; SK_DPD_DEF > 90 : 4 682 lignes (POS) | Validée avec SK_DPD_DEF (obligation significative) |
+| H9 | 9 261 demandes non marquées Y/1 sur 1 670 214 | Validée |
+
+## H10 — Lignes orphelines des suivis mensuels et paiements
+
+- **Énoncé :** les lignes de POS_CASH_balance, credit_card_balance et installments_payments dont le SK_ID_PREV est absent de previous_application sont conservées, rattachées au client par SK_ID_CURR, avec `contrat_connu = faux`. L'encours d'un prêt orphelin n'est pas calculé et est signalé.
+- **Justification :** 3,4 % à 28 % des lignes selon la table ; les supprimer violerait l'exhaustivité (BCBS 239, P4).
+- **Limite :** attributs du contrat inconnus pour ces lignes.
+- **Application :** couche silver.
+- **Statut :** validée.
+
+## H11 — Historique bureau orphelin et grain des paiements
+
+- **Énoncé :** les 3 120 184 lignes de bureau_balance sans crédit correspondant dans bureau sont exclues et comptées à chaque arrêté. Le grain d'installments_payments est le paiement (730 634 échéances ont plusieurs lignes) ; une clé technique est ajoutée en bronze.
+- **Justification :** aucun lien possible vers un client ; pas de clé naturelle unique pour les paiements.
+- **Application :** couches bronze et silver.
+- **Statut :** validée.
