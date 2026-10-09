@@ -72,7 +72,8 @@ with tempfile.TemporaryDirectory() as tmp:
             for table, _, cle, nb_attendu, sha_attendu in fichiers:
                 # DQ-01 : le fichier n'a pas été altéré depuis son dépôt
                 s3.download_file(BUCKET, cle, str(parquet))
-                controle(batch_id, "DQ-01", sha256(parquet) == sha_attendu, None, None, f"{cle} : empreinte vérifiée")
+                conforme = sha256(parquet) == sha_attendu
+                controle(batch_id, "DQ-01", conforme, None, None, f"{cle} : empreinte " + ("conforme au manifeste" if conforme else "DIFFÉRENTE du manifeste"))
 
                 # Table bronze : toutes les colonnes en texte + colonnes techniques
                 colonnes = [c[0].lower() for c in duck.execute(
