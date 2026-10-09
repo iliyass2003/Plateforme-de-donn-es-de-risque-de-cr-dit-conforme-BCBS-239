@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: int_contrats
+    description: "Contrats valides (H9), avec leur segment"
+    columns:
+      - name: contrat_id
+        tests: [unique, not_null]
+
+  - name: int_expositions_mensuelles
+    description: "Une ligne par contrat et par arrêté (H6, H8, H10)"
+    columns:
+      - name: cle
+        tests: [unique, not_null]
+      - name: tranche_code
+        tests: [not_null]
+      - name: est_defaut
+        tests: [not_null]
+      - name: segment
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Prêt cash', 'Point de vente', 'Carte renouvelable', 'Prêt non identifié', 'Non renseigné']
