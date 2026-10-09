@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: stg_homecredit__demandes
+    description: "Demandes en cours (train et test), typées ; H1 et H5 appliquées"
+    columns:
+      - name: client_id
+        tests: [unique, not_null]
+      - name: defaut_observe
+        tests:
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+                quote: false
+              config:
+                where: "origine = 'train'"
+      - name: revenu_annuel
+        tests: [not_null]
+
+  - name: stg_homecredit__demandes_passees
+    description: "Demandes passées, toutes gardées ; indicateurs de H9"
+    columns:
+      - name: contrat_id
+        tests: [unique, not_null]
+      - name: client_id
+        tests: [not_null]
+      - name: statut_demande
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Approved', 'Canceled', 'Refused', 'Unused offer']
