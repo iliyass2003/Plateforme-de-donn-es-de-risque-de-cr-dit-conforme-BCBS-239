@@ -118,3 +118,16 @@ L'indicateur `FR.INR.LEND` (taux d'intérêt débiteur) n'est pas publié pour l
 - **Justification :** sur l'échantillon, 859 crédits ont une dette négative, tous des cartes de crédit (minimum −1 354 875,62) ; aucun montant de crédit n'est négatif. Une première règle de quarantaine les rejetait à tort.
 - **Application :** staging des crédits externes ; exclue de la quarantaine.
 - **Statut :** validée.
+## H13 — Encours des prêts en exigibilité anticipée et périmètre du portefeuille
+
+- **Énoncé :** quand un prêt passe au statut « Demand » (exigibilité anticipée) ou « Amortized debt » et que son échéancier est fermé (0 échéance restante), son encours est le dernier encours positif connu du contrat. Le portefeuille comprend tous les contrats sauf les statuts « Completed » et « Returned to the store ».
+- **Justification :** sur l'échantillon, tous les défauts (113 lignes de prêts, 42 de cartes) portent ces statuts, avec un encours calculé de 0 pour les prêts. Le filtre « Active » et le calcul H8 effaçaient ensemble tous les défauts du reporting.
+- **Limite :** intérêts de retard et recouvrements partiels ignorés ; si l'exigibilité est antérieure à la fenêtre de 24 mois, l'encours reste vide.
+- **Application :** `int_expositions_mensuelles` (colonnes `encours_reporte` et `est_en_portefeuille`).
+- **Statut :** validée.
+## H14 — Encours inconnu des prêts orphelins
+
+- **Énoncé :** l'encours d'un prêt orphelin (contrat absent des demandes passées) est inconnu. Il n'est jamais remplacé par 0 ; la ligne porte `encours_connu = faux` et le reporting affiche séparément le nombre de contrats en défaut à encours inconnu.
+- **Justification :** sur l'échantillon, tous les défauts de prêts (113 lignes, 5 contrats) sont des orphelins, et aucun n'a de paiement permettant de retrouver la mensualité. Afficher 0 sous-estimerait le risque (BCBS 239, P7 et P8).
+- **Application :** `int_expositions_mensuelles`, puis reporting gold.
+- **Statut :** validée ; à réévaluer sur les données complètes.
