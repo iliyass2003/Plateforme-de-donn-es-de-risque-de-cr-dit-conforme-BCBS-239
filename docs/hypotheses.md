@@ -131,3 +131,8 @@ L'indicateur `FR.INR.LEND` (taux d'intérêt débiteur) n'est pas publié pour l
 - **Justification :** sur l'échantillon, tous les défauts de prêts (113 lignes, 5 contrats) sont des orphelins, et aucun n'a de paiement permettant de retrouver la mensualité. Afficher 0 sous-estimerait le risque (BCBS 239, P7 et P8).
 - **Application :** `int_expositions_mensuelles`, puis reporting gold.
 - **Statut :** validée ; à réévaluer sur les données complètes.
+## H15 — Limites des indicateurs sur l'échantillon et effet de bord des derniers arrêtés
+
+- **Énoncé :** (1) le taux de défaut à 12 mois vaut 0 % sur l'échantillon, car les 7 contrats en défaut l'étaient déjà au premier arrêté (31/12/2023) ; aucune entrée en défaut n'est observée sur 10 % des clients. (2) Le portefeuille croît jusqu'en avril 2025 (27 974 contrats) puis décroît jusqu'à 14 615 en novembre 2025 : les suivis mensuels ne sont pas renseignés jusqu'à T0 pour tous les contrats, effet de l'alignement des demandes sur une date unique (H1).
+- **Conséquence :** les derniers arrêtés sont incomplets et ne doivent pas être lus comme un recul d'activité ; le reporting l'indique. Les deux indicateurs sont à recalculer sur les données complètes.
+- **Statut :** validée ; à réévaluer sur les données complètes.
