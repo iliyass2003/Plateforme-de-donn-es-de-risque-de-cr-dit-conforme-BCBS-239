@@ -48,3 +48,9 @@ variable "pg_password" {
   type        = string
   sensitive   = true
 }
+
+variable "powerbi_password" {
+  description = "Mot de passe du compte de connexion Power BI (lu depuis l'environnement)"
+  type        = string
+  sensitive   = true
+}

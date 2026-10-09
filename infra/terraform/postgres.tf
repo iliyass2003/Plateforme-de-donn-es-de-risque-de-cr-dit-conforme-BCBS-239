@@ -12,7 +12,7 @@ provider "postgresql" {
 
 locals {
   # Les 5 zones du warehouse (docs/architecture.md)
-  schemas = ["bronze", "staging", "intermediate", "marts", "ctl"]
+  schemas = ["bronze", "staging", "intermediate", "marts", "ctl", "reporting"]
 
   # Les 6 profils de droits (BCBS 239 - P11)
   roles = [
@@ -32,13 +32,14 @@ locals {
     { role = "role_transformation", schema = "intermediate" },
     { role = "role_transformation", schema = "marts" },
     { role = "role_transformation", schema = "ctl" },
+    { role = "role_transformation", schema = "reporting" },
   ]
 
   # Qui lit quoi, et les tables créées par quel rôle (owner)
   lecture = [
     { role = "role_transformation", schema = "bronze", owner = "role_ingestion" },
     { role = "role_analyste_risque", schema = "marts", owner = "role_transformation" },
-    { role = "role_bi", schema = "marts", owner = "role_transformation" },
+    { role = "role_bi", schema = "reporting", owner = "role_transformation" },
     { role = "role_data_scientist", schema = "marts", owner = "role_transformation" },
     { role = "role_auditeur", schema = "marts", owner = "role_transformation" },
     { role = "role_auditeur", schema = "ctl", owner = "role_ingestion" },
@@ -89,4 +90,12 @@ resource "postgresql_default_privileges" "lecture" {
   object_type = "table"
   privileges  = ["SELECT"]
   depends_on  = [postgresql_role.profils, postgresql_schema.zones]
+}
+# Compte de connexion de Power BI : lecture seule des vues de reporting (P11)
+resource "postgresql_role" "svc_powerbi" {
+  name     = "svc_powerbi"
+  login    = true
+  password = var.powerbi_password
+  roles    = ["role_bi"]
+  depends_on = [postgresql_role.profils]
 }

@@ -6,3 +6,6 @@ sources:
     schema: ctl
     tables:
       - name: file_manifest
+      - name: dq_score
+      - name: control_results
+      - name: batch_log

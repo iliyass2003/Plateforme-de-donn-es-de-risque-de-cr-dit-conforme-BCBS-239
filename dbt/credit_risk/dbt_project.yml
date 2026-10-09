@@ -27,3 +27,6 @@ models:
     controles:
       +schema: ctl
       +materialized: view
+    reporting:
+      +schema: reporting
+      +materialized: view
