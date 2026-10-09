@@ -1,8 +1,7 @@
 -- Réconciliation source (manifestes de la landing) / cible (gold), par contrôle et par arrêté.
--- BCBS 239 : P3 (exactitude) et P4 (exhaustivité).
+-- BCBS 239 : P3 (exactitude) et P4 (exhaustivité). RC-07 : défense en profondeur intermediate / gold.
 
 with manifeste as (
-    -- dernière version de chaque fichier reçu
     select distinct on (chemin_objet) table_name, arrete, nb_lignes, sommes
     from {{ source('ctl', 'file_manifest') }}
     where source <> 'banque_mondiale'
@@ -61,6 +60,14 @@ controles as (
            0
     from manifeste m
     where m.table_name = 'pos_cash_balance'
+
+    union all
+    select 'RC-07', i.arrete, 'Lignes d''exposition : intermediate / gold',
+           count(*)::numeric,
+           (select count(*) from {{ ref('fct_exposition_mensuelle') }} f where f.arrete = i.arrete)::numeric,
+           0
+    from {{ ref('int_expositions_mensuelles') }} i
+    group by i.arrete
 )
 
 select

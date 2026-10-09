@@ -1,7 +1,7 @@
 -- Grain : un contrat × un arrêté. Incrémental : seuls le dernier arrêté et les nouveaux sont retraités.
 {{ config(
     materialized = 'incremental',
-    unique_key = 'cle',
+    unique_key = 'arrete',
     incremental_strategy = 'delete+insert'
 ) }}
 
