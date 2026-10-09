@@ -1,0 +1,13 @@
+credit_risk:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      port: "{{ env_var('POSTGRES_PORT') | as_number }}"
+      user: "{{ env_var('POSTGRES_USER') }}"
+      password: "{{ env_var('POSTGRES_PASSWORD') }}"
+      dbname: "{{ env_var('POSTGRES_DB') }}"
+      schema: staging
+      role: role_transformation   # dbt agit avec le profil de transformation (P11)
+      threads: 4

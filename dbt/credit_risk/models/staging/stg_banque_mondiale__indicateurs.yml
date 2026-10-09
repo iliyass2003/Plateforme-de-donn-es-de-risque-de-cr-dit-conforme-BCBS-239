@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: stg_banque_mondiale__indicateurs
+    description: "Une ligne par indicateur et par année, valeurs typées"
+    columns:
+      - name: indicateur_code
+        tests: [not_null]
+      - name: annee
+        tests: [not_null]
+      - name: valeur
+        tests: [not_null]
