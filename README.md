@@ -55,8 +55,8 @@ Les données ne sont pas incluses dans ce dépôt (volume et conditions d'utilis
 | 1 | Infrastructure locale | À faire |
 | 2 | Zone landing | Terminé |
 | 3 | Zone bronze | Terminé |
-| 4 | Zone silver | En cours |
-| 5 | Zone gold | À faire |
+| 4 | Zone silver | Terminé |
+| 5 | Zone gold | En cours |
 | 6 | Contrôles et réconciliation | À faire |
 | 7 | Orchestration | À faire |
 | 8 | Sécurité, CI/CD et reporting | À faire |

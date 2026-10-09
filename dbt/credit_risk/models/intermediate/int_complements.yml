@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: int_paiements_enrichis
+    description: "Paiements avec retard et écart dû / payé par échéance (H11)"
+    columns:
+      - name: paiement_id
+        tests: [unique, not_null]
+      - name: jours_retard_paiement
+        tests:
+          - not_null:
+              config:
+                where: "not non_paye"
+
+  - name: int_bureau_resume_client
+    description: "Une ligne par client : endettement et retards externes (H3, H11, H12)"
+    columns:
+      - name: client_id
+        tests: [unique, not_null]
