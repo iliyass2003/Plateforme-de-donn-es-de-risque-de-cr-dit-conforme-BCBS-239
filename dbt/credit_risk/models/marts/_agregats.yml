@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: agg_synthese_arrete
+    columns:
+      - name: arrete
+        tests: [unique, not_null]
+  - name: agg_risque_arrete
+    columns:
+      - name: cle
+        tests: [unique, not_null]
+  - name: agg_migration_retard
+    columns:
+      - name: cle
+        tests: [unique, not_null]
+  - name: agg_concentration
+    columns:
+      - name: arrete
+        tests: [unique, not_null]
+  - name: agg_taux_defaut_12m
+    columns:
+      - name: arrete
+        tests: [unique, not_null]
