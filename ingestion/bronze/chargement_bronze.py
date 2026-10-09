@@ -95,10 +95,9 @@ with tempfile.TemporaryDirectory() as tmp:
                     TO '{csv.as_posix()}' (HEADER, DELIMITER ',')
                 """)
                 noms = ", ".join([f'"{c}"' for c in colonnes] + ["_batch_id", "_arrete", "_source_file", "_row_hash"])
-                with pg.cursor() as cur, cur.copy(f"COPY bronze.{table} ({noms}) FROM STDIN WITH (FORMAT csv, HEADER true)") as copie:
-                    with open(csv, "rb") as f:
-                        while bloc := f.read(1024 * 1024):
-                            copie.write(bloc)
+                with pg.cursor() as cur, cur.copy(f"COPY bronze.{table} ({noms}) FROM STDIN WITH (FORMAT csv, HEADER true)") as copie, open(csv, "rb") as f:
+                    while bloc := f.read(1024 * 1024):
+                        copie.write(bloc)
 
                 # DQ-03 : aucune ligne perdue
                 nb = pg.execute(f"SELECT count(*) FROM bronze.{table} WHERE _source_file = %s", (cle,)).fetchone()[0]

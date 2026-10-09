@@ -1,5 +1,7 @@
 # Plateforme de données de risque de crédit — conforme BCBS 239
 
+[![CI](https://github.com/iliyass2003/Plateforme-de-donn-es-de-risque-de-cr-dit-conforme-BCBS-239/actions/workflows/ci.yml/badge.svg)](https://github.com/iliyass2003/Plateforme-de-donn-es-de-risque-de-cr-dit-conforme-BCBS-239/actions)
+
 Plateforme qui agrège, contrôle et réconcilie chaque mois les données de risque de crédit d'une banque de détail, du fichier source jusqu'au reporting, avec une traçabilité complète de chaque chiffre.
 
 > **Statut :** en cours de réalisation — Lot 0 (cadrage et socle)
