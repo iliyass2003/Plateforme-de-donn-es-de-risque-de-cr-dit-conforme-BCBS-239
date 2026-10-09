@@ -12,6 +12,7 @@ select
     cast(amt_credit_sum as numeric(18, 2))          as montant_credit,
     cast(amt_credit_sum_debt as numeric(18, 2))     as dette_restante,
     cast(amt_credit_sum_overdue as numeric(18, 2))  as montant_en_retard,
+    (cast(amt_credit_sum_debt as numeric) < 0)      as est_trop_percu,   -- H12 : dette négative = trop-perçu sur carte
     _arrete,
     _batch_id,
     _source_file

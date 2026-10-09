@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: int_quarantaine
+    description: "Lignes invalides, une ligne par rejet, avec motif et fichier d'origine"
+    columns:
+      - name: entite
+        tests: [not_null]
+      - name: cle
+        tests: [not_null]
+      - name: motif
+        tests: [not_null]

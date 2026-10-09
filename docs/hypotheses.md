@@ -112,3 +112,9 @@ Source : `docs/profilage.md`, données complètes.
 ## Note sur H4 — indicateur retiré
 
 L'indicateur `FR.INR.LEND` (taux d'intérêt débiteur) n'est pas publié pour le Maroc par la Banque mondiale : 0 année disponible, contrôle DQ-13 en KO le 2026-10-09. Il est retiré de l'extraction. Indicateurs conservés : croissance du PIB réel, inflation, chômage (dernière année 2025).
+## H12 — Dettes négatives dans le bureau de crédit
+
+- **Énoncé :** une dette restante négative (`AMT_CREDIT_SUM_DEBT < 0`) est un trop-perçu : le client a remboursé plus que dû. La ligne est valide, conservée, et signalée par `est_trop_percu = vrai`.
+- **Justification :** sur l'échantillon, 859 crédits ont une dette négative, tous des cartes de crédit (minimum −1 354 875,62) ; aucun montant de crédit n'est négatif. Une première règle de quarantaine les rejetait à tort.
+- **Application :** staging des crédits externes ; exclue de la quarantaine.
+- **Statut :** validée.
