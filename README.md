@@ -53,8 +53,8 @@ Les données ne sont pas incluses dans ce dépôt (volume et conditions d'utilis
 | --- | --- | --- |
 | 0 | Cadrage et socle | En cours |
 | 1 | Infrastructure locale | À faire |
-| 2 | Zone landing | En cours |
-| 3 | Zone bronze | À faire |
+| 2 | Zone landing | Terminé |
+| 3 | Zone bronze | En cours |
 | 4 | Zone silver | À faire |
 | 5 | Zone gold | À faire |
 | 6 | Contrôles et réconciliation | À faire |
