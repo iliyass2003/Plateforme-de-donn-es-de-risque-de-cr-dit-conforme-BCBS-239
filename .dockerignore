@@ -1,0 +1,7 @@
+data/
+.venv/
+airflow/logs/
+dbt/**/target/
+dbt/**/logs/
+.git/
+infra/terraform/.terraform/

@@ -25,12 +25,12 @@ ANCIENNETE_MAX = 2  # DQ-13 : dernière année disponible au plus 2 ans avant T0
 
 s3 = boto3.client(
     "s3",
-    endpoint_url=f"http://localhost:{os.getenv('MINIO_API_PORT')}",
+    endpoint_url=os.getenv("MINIO_ENDPOINT", f"http://localhost:{os.getenv('MINIO_API_PORT')}"),
     aws_access_key_id=os.getenv("MINIO_ROOT_USER"),
     aws_secret_access_key=os.getenv("MINIO_ROOT_PASSWORD"),
 )
 pg = psycopg.connect(
-    host="localhost", port=os.getenv("POSTGRES_PORT"), dbname=os.getenv("POSTGRES_DB"),
+    host=os.getenv("POSTGRES_HOST", "localhost"), port=os.getenv("POSTGRES_PORT"), dbname=os.getenv("POSTGRES_DB"),
     user=os.getenv("POSTGRES_USER"), password=os.getenv("POSTGRES_PASSWORD"), autocommit=True,
 )
 pg.execute("SET ROLE role_ingestion")

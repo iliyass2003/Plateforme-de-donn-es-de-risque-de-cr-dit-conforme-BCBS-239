@@ -40,6 +40,67 @@ services:
       retries: 5
     restart: "no"
 
+  # ---------- Airflow (orchestration, Lot 7) ----------
+  airflow-init:
+    build:
+      context: .
+      dockerfile: infra/airflow/Dockerfile
+    image: crdp-airflow:1.0
+    container_name: crdp_airflow_init
+    env_file: .env
+    environment: &airflow_env
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+      AIRFLOW__WEBSERVER__SECRET_KEY: ${AIRFLOW_SECRET_KEY}
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: "5432"
+      MINIO_ENDPOINT: http://minio:9000
+      _AIRFLOW_DB_MIGRATE: "true"
+      _AIRFLOW_WWW_USER_CREATE: "true"
+      _AIRFLOW_WWW_USER_USERNAME: ${AIRFLOW_ADMIN_USER}
+      _AIRFLOW_WWW_USER_PASSWORD: ${AIRFLOW_ADMIN_PASSWORD}
+    volumes: &airflow_volumes
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./:/opt/projet
+    command: version
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  airflow-webserver:
+    image: crdp-airflow:1.0
+    container_name: crdp_airflow_webserver
+    env_file: .env
+    environment: *airflow_env
+    volumes: *airflow_volumes
+    command: webserver
+    ports:
+      - "${AIRFLOW_PORT}:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+    restart: "no"
+
+  airflow-scheduler:
+    image: crdp-airflow:1.0
+    container_name: crdp_airflow_scheduler
+    env_file: .env
+    environment: *airflow_env
+    volumes: *airflow_volumes
+    command: scheduler
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+    restart: "no"
 volumes:
   pg_data:
   minio_data:

@@ -13,7 +13,7 @@ T0 = os.getenv("T0_DATE", "2025-12-31")
 SEUIL_SCORE = 98.0
 
 pg = psycopg.connect(
-    host="localhost", port=os.getenv("POSTGRES_PORT"), dbname=os.getenv("POSTGRES_DB"),
+    host=os.getenv("POSTGRES_HOST", "localhost"), port=os.getenv("POSTGRES_PORT"), dbname=os.getenv("POSTGRES_DB"),
     user=os.getenv("POSTGRES_USER"), password=os.getenv("POSTGRES_PASSWORD"), autocommit=True,
 )
 pg.execute("SET ROLE role_transformation")
