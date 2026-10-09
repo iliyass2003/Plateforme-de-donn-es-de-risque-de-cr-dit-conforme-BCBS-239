@@ -17,6 +17,7 @@ DBT_DIR = f"{PROJET}/dbt/credit_risk"
 def signaler_echec(context):
     """Appelé quand une tâche échoue définitivement (après ses tentatives) : alerte Telegram."""
     import os
+
     import requests
 
     ti = context["task_instance"]

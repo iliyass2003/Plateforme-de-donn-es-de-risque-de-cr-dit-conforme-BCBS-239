@@ -5,7 +5,7 @@ Avertissement si la durée dépasse le délai cible (2 heures).
 """
 import os
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import psycopg
 from dotenv import load_dotenv
@@ -15,7 +15,7 @@ T0 = os.getenv("T0_DATE", "2025-12-31")
 DELAI_CIBLE_MIN = 120
 
 debut = datetime.fromisoformat(sys.argv[1])
-duree_min = round((datetime.now(timezone.utc) - debut).total_seconds() / 60, 1)
+duree_min = round((datetime.now(UTC) - debut).total_seconds() / 60, 1)
 ok = duree_min <= DELAI_CIBLE_MIN
 
 pg = psycopg.connect(
