@@ -28,3 +28,6 @@ Thumbs.db
 .vscode/
 # Plans Terraform enregistrés
 tfplan
+
+# Fichier local créé par dbt
+dbt/**/.user.yml
