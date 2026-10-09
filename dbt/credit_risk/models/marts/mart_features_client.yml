@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: mart_features_client
+    description: "Une ligne par client, variables connues avant T0. Seule table lue par le projet Data Science."
+    config:
+      contract:
+        enforced: true
+    columns:
+      - {name: client_id, data_type: bigint, tests: [unique, not_null]}
+      - {name: origine, data_type: text}
+      - name: defaut_observe
+        data_type: integer
+        tests:
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+                quote: false
+              config:
+                where: "origine = 'train'"
+      - {name: type_contrat, data_type: text}
+      - {name: montant_credit, data_type: numeric}
+      - {name: annuite, data_type: numeric}
+      - {name: revenu_annuel, data_type: numeric}
+      - {name: prix_bien, data_type: numeric}
+      - {name: taux_effort, data_type: numeric}
+      - {name: age, data_type: integer}
+      - {name: nb_enfants, data_type: integer}
+      - {name: niveau_etudes, data_type: text}
+      - {name: type_revenu, data_type: text}
+      - {name: est_sans_emploi, data_type: boolean}
+      - {name: anciennete_emploi_annees, data_type: numeric}
+      - {name: note_region, data_type: integer}
+      - {name: score_externe_1, data_type: numeric}
+      - {name: score_externe_2, data_type: numeric}
+      - {name: score_externe_3, data_type: numeric}
+      - {name: nb_credits_externes, data_type: integer}
+      - {name: nb_credits_externes_actifs, data_type: integer}
+      - {name: dette_externe, data_type: numeric}
+      - {name: ratio_dette_externe_revenu, data_type: numeric}
+      - {name: pire_retard_externe_jours, data_type: integer}
+      - {name: pire_statut_externe_12m, data_type: integer}
+      - {name: nb_demandes_passees, data_type: integer}
+      - {name: taux_refus_passe, data_type: numeric}
+      - {name: nb_paiements, data_type: integer}
+      - {name: pct_paiements_en_retard, data_type: numeric}
+      - {name: retard_paiement_max, data_type: integer}
+      - {name: nb_echeances_non_payees, data_type: integer}
+      - {name: utilisation_carte_moyenne, data_type: numeric}
+      - {name: retard_carte_max, data_type: integer}
