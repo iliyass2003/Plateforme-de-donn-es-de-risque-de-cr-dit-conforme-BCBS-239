@@ -58,8 +58,8 @@ Les données ne sont pas incluses dans ce dépôt (volume et conditions d'utilis
 | 4 | Zone silver | Terminé |
 | 5 | Zone gold | Terminé |
 | 6 | Contrôles et réconciliation | Terminé |
-| 7 | Orchestration | En cours |
-| 8 | Sécurité, CI/CD et reporting | À faire |
+| 7 | Orchestration | Terminé |
+| 8 | Sécurité, CI/CD et reporting | En cours |
 
 ## Auteur
 
