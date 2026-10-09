@@ -15,9 +15,18 @@ DBT_DIR = f"{PROJET}/dbt/credit_risk"
 
 
 def signaler_echec(context):
-    """Appelé quand une tâche échoue définitivement (après ses tentatives)."""
+    """Appelé quand une tâche échoue définitivement (après ses tentatives) : alerte Telegram."""
+    import os
+    import requests
+
     ti = context["task_instance"]
-    print(f"ALERTE : la tâche {ti.task_id} du DAG {ti.dag_id} a échoué ({context['logical_date']}).")
+    message = (f"ALERTE arrêté risque de crédit\nTâche en échec : {ti.task_id}\n"
+               f"Exécution : {context['logical_date']}\nLogs : http://localhost:8090")
+    print(message)
+    jeton, chat = os.getenv("TELEGRAM_BOT_TOKEN"), os.getenv("TELEGRAM_CHAT_ID")
+    if jeton and chat and jeton != "changer_moi":
+        requests.post(f"https://api.telegram.org/bot{jeton}/sendMessage",
+                      data={"chat_id": chat, "text": message}, timeout=10)
 
 
 default_args = {
@@ -60,4 +69,7 @@ with DAG(
 
     decoupage >> depot_landing >> chargement_bronze
     extraire_api >> chargement_bronze_api
-    [chargement_bronze, chargement_bronze_api] >> dbt_seed >> dbt_run >> dbt_test >> publier_controles
+    mesurer_delai = BashOperator(task_id="mesurer_delai", cwd=PROJET, retries=0, trigger_rule="all_done",
+                                 bash_command=f"{PY} ingestion/controles/mesurer_delai.py {{{{ dag_run.start_date.isoformat() }}}}")
+
+    [chargement_bronze, chargement_bronze_api] >> dbt_seed >> dbt_run >> dbt_test >> publier_controles >> mesurer_delai

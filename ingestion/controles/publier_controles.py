@@ -81,7 +81,7 @@ try:
         SELECT CASE
                  WHEN controle_id IN ('DQ-01', 'RC-02', 'RC-03', 'RC-04', 'RC-05') THEN 'exactitude'
                  WHEN controle_id IN ('DQ-03', 'RC-01', 'RC-06', 'RC-07', 'DQ-07')          THEN 'completude'
-                 WHEN controle_id = 'DQ-13'                                        THEN 'actualite'
+                 WHEN controle_id IN ('DQ-12', 'DQ-13')                                        THEN 'actualite'
                  ELSE 'coherence'
                END AS dimension,
                round(100 * avg((statut = 'OK')::int), 2) AS score
