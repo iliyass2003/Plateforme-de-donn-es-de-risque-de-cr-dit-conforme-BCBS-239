@@ -109,3 +109,6 @@ Source : `docs/profilage.md`, données complètes.
 - **Justification :** aucun lien possible vers un client ; pas de clé naturelle unique pour les paiements.
 - **Application :** couches bronze et silver.
 - **Statut :** validée.
+## Note sur H4 — indicateur retiré
+
+L'indicateur `FR.INR.LEND` (taux d'intérêt débiteur) n'est pas publié pour le Maroc par la Banque mondiale : 0 année disponible, contrôle DQ-13 en KO le 2026-10-09. Il est retiré de l'extraction. Indicateurs conservés : croissance du PIB réel, inflation, chômage (dernière année 2025).

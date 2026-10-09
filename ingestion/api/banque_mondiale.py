@@ -20,7 +20,6 @@ INDICATEURS = {
     "NY.GDP.MKTP.KD.ZG": "croissance_pib_reel",
     "FP.CPI.TOTL.ZG": "inflation",
     "SL.UEM.TOTL.ZS": "chomage",
-    "FR.INR.LEND": "taux_debiteur",
 }
 ANCIENNETE_MAX = 2  # DQ-13 : dernière année disponible au plus 2 ans avant T0
 
