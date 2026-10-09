@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: ctl
+    description: "Piste d'audit : manifestes des fichiers reçus (Lot 2)"
+    schema: ctl
+    tables:
+      - name: file_manifest

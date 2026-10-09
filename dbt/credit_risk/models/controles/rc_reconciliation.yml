@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: rc_reconciliation
+    description: "Réconciliation landing / gold par contrôle et par arrêté. Un seul KO fait échouer dbt test."
+    columns:
+      - name: cle
+        tests: [unique, not_null]
+      - name: statut
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['OK']
