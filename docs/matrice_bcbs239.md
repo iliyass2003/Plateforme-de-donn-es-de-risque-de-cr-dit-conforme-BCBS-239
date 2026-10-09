@@ -14,9 +14,9 @@ Correspondance entre les principes BCBS 239 (Comité de Bâle, 2013) et leur mis
 | P4 Exhaustivité | Contrôles de complétude à chaque couche | 3, 6 | DQ-03 dans `ingestion/bronze/` (lignes chargées = manifeste) | En cours |
 | P5 Actualité | Arrêté traité en moins de 2 heures, relançable à la demande | 7 | `ingestion/api/banque_mondiale.py` (DQ-13 dans ctl.control_results) | En cours |
 | P6 Adaptabilité | Modèle en étoile interrogeable, segmentation configurable | 5 | | À faire |
-| P7 Exactitude des rapports | Indicateurs du rapport rapprochés du gold | 1, 8 | `infra/terraform/postgres.tf` | En cours |
-| P8 Exhaustivité des rapports | Encours, retards, défauts, concentration, migrations | 1, 8 | `infra/terraform/postgres.tf` | En cours |
-| P9 Clarté et utilité | Définitions, date d'arrêté et score qualité visibles | 1, 8 | `infra/terraform/postgres.tf` | En cours |
+| P7 Exactitude des rapports | Indicateurs du rapport rapprochés du gold | 1, 8 | `infra/terraform/postgres.tf` ; test `SET ROLE role_bi` : lecture de `marts` autorisée, `staging` refusé | En cours |
+| P8 Exhaustivité des rapports | Encours, retards, défauts, concentration, migrations | 1, 8 | `infra/terraform/postgres.tf` ; test `SET ROLE role_bi` : lecture de `marts` autorisée, `staging` refusé | En cours |
+| P9 Clarté et utilité | Définitions, date d'arrêté et score qualité visibles | 1, 8 | `infra/terraform/postgres.tf` ; test `SET ROLE role_bi` : lecture de `marts` autorisée, `staging` refusé | En cours |
 | P10 Fréquence | Arrêté mensuel planifié, arrêté à la demande possible | 7 | `ingestion/api/banque_mondiale.py` (DQ-13 dans ctl.control_results) | En cours |
-| P11 Distribution | Rôles d'accès par profil, données sensibles masquées | 1, 8 | `infra/terraform/postgres.tf` | En cours |
+| P11 Distribution | Rôles d'accès par profil, données sensibles masquées | 1, 8 | `infra/terraform/postgres.tf` ; test `SET ROLE role_bi` : lecture de `marts` autorisée, `staging` refusé | En cours |
 | P12 à P14 Revue prudentielle | Hors périmètre ; piste d'audit conservée | 1, 6, 7 | `infra/postgres/01_ctl_tables.sql` | En cours |

@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: dim_arrete
+    description: "Une ligne par arrêté mensuel"
+    columns:
+      - name: arrete
+        tests: [unique, not_null]
+      - name: arrete_key
+        tests: [unique, not_null]
+
+  - name: dim_client
+    description: "Une ligne par client, âge à T0"
+    columns:
+      - name: client_id
+        tests: [unique, not_null]
+      - name: tranche_age
+        tests: [not_null]
+
+  - name: dim_contrat
+    description: "Contrats connus et orphelins"
+    columns:
+      - name: contrat_id
+        tests: [unique, not_null]
+
+  - name: dim_tranche_retard
+    columns:
+      - name: tranche_code
+        tests: [unique, not_null]
+
+  - name: dim_macro
+    columns:
+      - name: annee
+        tests: [unique, not_null]
