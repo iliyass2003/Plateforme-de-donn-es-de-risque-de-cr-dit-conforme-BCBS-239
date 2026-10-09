@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: fct_exposition_mensuelle
+    description: "Une ligne par contrat et par arrêté"
+    columns:
+      - name: cle
+        tests: [unique, not_null]
+      - name: contrat_id
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_contrat')
+                field: contrat_id
+      - name: client_id
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_client')
+                field: client_id
+      - name: arrete_key
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_arrete')
+                field: arrete_key
+      - name: tranche_code
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_tranche_retard')
+                field: tranche_code
+
+  - name: fct_paiements
+    columns:
+      - name: paiement_id
+        tests: [unique, not_null]
+
+  - name: fct_demandes
+    columns:
+      - name: client_id
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_client')
+                field: client_id
+
+  - name: fct_credits_externes
+    columns:
+      - name: credit_externe_id
+        tests: [unique, not_null]
