@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: stg_homecredit__credits_externes
+    columns:
+      - name: credit_externe_id
+        tests: [unique, not_null]
+      - name: client_id
+        tests: [not_null]
+
+  - name: stg_homecredit__historique_externe
+    columns:
+      - name: cle
+        tests: [unique, not_null]
+
+  - name: stg_homecredit__suivi_prets
+    columns:
+      - name: cle
+        tests: [unique, not_null]
+      - name: client_id
+        tests: [not_null]
+
+  - name: stg_homecredit__suivi_cartes
+    columns:
+      - name: cle
+        tests: [unique, not_null]
+      - name: client_id
+        tests: [not_null]
+
+  - name: stg_homecredit__paiements
+    columns:
+      - name: paiement_id
+        tests: [unique, not_null]
+      - name: date_prevue
+        tests: [not_null]
