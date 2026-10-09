@@ -93,9 +93,9 @@ resource "postgresql_default_privileges" "lecture" {
 }
 # Compte de connexion de Power BI : lecture seule des vues de reporting (P11)
 resource "postgresql_role" "svc_powerbi" {
-  name     = "svc_powerbi"
-  login    = true
-  password = var.powerbi_password
-  roles    = ["role_bi"]
+  name       = "svc_powerbi"
+  login      = true
+  password   = var.powerbi_password
+  roles      = ["role_bi"]
   depends_on = [postgresql_role.profils]
 }
