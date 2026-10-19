@@ -74,7 +74,19 @@ Limite : la classe « Missing » de `score_externe_2` ne compte que 47 clients (
 ## 8. Équité
 
 Le sexe n'est pas une variable du modèle (M9) et n'est pas disponible dans la table de features. L'âge, lié au risque seul (de 11 % à 5 % de difficultés), n'apporte plus d'information une fois les autres variables connues : coefficient positif et non significatif (p = 0,47), retiré par l'élimination descendante. La scorecard n'utilise donc aucune donnée d'âge ni de sexe.
+## 9. Calibration (DS-5)
 
+| Critère | Seuil | Résultat (validation) | Statut |
+| --- | --- | --- | --- |
+| V5 : écart de PD moyenne | ≤ 1 point | 7,86 % prédit / 7,94 % observé, écart ≈ −0,08 point | Respecté |
+| V6 : écart par décile | ≤ 2 points dans chaque décile | 9 déciles sur 10 ; décile 10 : 27,0 % prédit / 24,9 % observé, écart +2,11 points | Exception justifiée |
+| V7 : Brier | < PD constante | 0,06829 contre 0,07307, gain +6,6 % | Respecté |
+
+**Exception V6 (décile 10).** L'écart de +2,11 points est inférieur à la marge statistique du décile (±2,85 points, 923 clients) : il n'est pas significatif. Le modèle surestime le risque des clients les plus risqués, ce qui est prudent (provisions plus fortes). Le seuil n'est pas modifié.
+
+**Point d'attention (décile 3).** Écart de −1,49 point, supérieur à sa marge (1,31) : légère sous-estimation du risque, dans le seuil.
+
+**Action de suivi.** Recontrôler V6 à chaque arrêté en production ; recalibrer si un décile dépasse 2 points de façon significative ou dans le sens d'une sous-estimation.
 ## 9. ECL
 À compléter (DS-6) : méthode, exemple chiffré, résultats, contrôles E1 à E5.
 
