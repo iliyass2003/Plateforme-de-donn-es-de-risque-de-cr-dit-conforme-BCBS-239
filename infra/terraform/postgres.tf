@@ -12,7 +12,7 @@ provider "postgresql" {
 
 locals {
   # Les 5 zones du warehouse (docs/architecture.md)
-  schemas = ["bronze", "staging", "intermediate", "marts", "ctl", "reporting"]
+  schemas = ["bronze", "staging", "intermediate", "marts", "ctl", "reporting", "ds"]
 
   # Les 6 profils de droits (BCBS 239 - P11)
   roles = [
@@ -33,6 +33,7 @@ locals {
     { role = "role_transformation", schema = "marts" },
     { role = "role_transformation", schema = "ctl" },
     { role = "role_transformation", schema = "reporting" },
+    { role = "role_data_scientist", schema = "ds" },
   ]
 
   # Qui lit quoi, et les tables créées par quel rôle (owner)
@@ -40,6 +41,7 @@ locals {
     { role = "role_transformation", schema = "bronze", owner = "role_ingestion" },
     { role = "role_analyste_risque", schema = "marts", owner = "role_transformation" },
     { role = "role_bi", schema = "reporting", owner = "role_transformation" },
+    { role = "role_transformation", schema = "ds", owner = "role_data_scientist" },
     { role = "role_data_scientist", schema = "marts", owner = "role_transformation" },
     { role = "role_auditeur", schema = "marts", owner = "role_transformation" },
     { role = "role_auditeur", schema = "ctl", owner = "role_ingestion" },
@@ -97,5 +99,13 @@ resource "postgresql_role" "svc_powerbi" {
   login      = true
   password   = var.powerbi_password
   roles      = ["role_bi"]
+  depends_on = [postgresql_role.profils]
+}
+# Compte de connexion du projet Data Science : lit marts, écrit seulement ds (P11)
+resource "postgresql_role" "svc_data_science" {
+  name       = "svc_data_science"
+  login      = true
+  password   = var.ds_password
+  roles      = ["role_data_scientist"]
   depends_on = [postgresql_role.profils]
 }

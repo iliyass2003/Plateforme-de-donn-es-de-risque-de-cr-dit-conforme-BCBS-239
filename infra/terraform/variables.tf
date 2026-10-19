@@ -54,3 +54,9 @@ variable "powerbi_password" {
   type        = string
   sensitive   = true
 }
+
+variable "ds_password" {
+  description = "Mot de passe du compte de connexion Data Science (lu depuis l'environnement)"
+  type        = string
+  sensitive   = true
+}
