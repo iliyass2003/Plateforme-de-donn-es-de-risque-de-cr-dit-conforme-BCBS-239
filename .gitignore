@@ -36,3 +36,4 @@ dbt/**/.user.yml
 ds/mlruns/
 ds/mlflow.db
 .ipynb_checkpoints/
+ds/artefacts_tmp/
