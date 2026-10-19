@@ -51,10 +51,25 @@ Limite : la classe « Missing » de `score_externe_2` ne compte que 47 clients (
 | V4 Écart-type de l'AUC sur 5 plis | ≤ 0,02 | 0,010 (moyenne 0,751) | Respecté |
 | V9 Signes des coefficients | Tous négatifs | Oui, et dans chacun des 5 plis | Respecté |
 | V5 à V8 | | À évaluer (DS-5) | |
-| V10 | | À évaluer (DS-4) | |
+| V10 Gain d'AUC du challenger | Examiné si > 0,05 | +0,007 | Respecté |
 
 ## 7. Challenger
-À compléter (DS-4).
+
+**Modèle** : LightGBM, 32 variables (toutes les variables disponibles), arbres de 15 feuilles au plus, 100 clients minimum par feuille, tirages de 80 % des variables et des clients ; 177 arbres retenus par arrêt précoce en validation croisée à 5 plis. Même découpage apprentissage / validation que la scorecard. Run MLflow `challenger_lightgbm_v1` (expérience `pd_challenger`), notebook `ds/notebooks/03_challenger.ipynb`.
+
+| | Scorecard | Challenger | Gain |
+| --- | --- | --- | --- |
+| AUC de validation | 0,739 | 0,746 | +0,007 |
+| Gini de validation | 0,478 | 0,492 | +0,014 |
+| KS de validation | 0,364 | 0,389 | +0,025 |
+| AUC en validation croisée | 0,751 | 0,755 | +0,004 |
+| Écart d'AUC apprentissage / validation | 0,024 | 0,087 | |
+
+**V10** : gain d'AUC de 0,007, sous le seuil d'examen de 0,05 et même sous 0,02 : la lisibilité de la scorecard ne coûte presque rien. Le challenger surapprend nettement (écart de 0,087). À revérifier sur les données complètes, où les modèles par arbres profitent davantage du volume.
+
+**Explicabilité (SHAP)** : vérification d'additivité exacte (écart nul). Les variables les plus importantes sont celles de la scorecard, dans le même ordre (scores externes 2, 3 et 1, niveau d'études, ratio de financement, durée, ancienneté) ; aucune information majeure n'est oubliée par la scorecard. Sens logiques ; observation : les crédits courts sont plus risqués (mensualité relativement plus lourde, ou biais de sélection).
+
+**Exemple (client sûr, PD de 1,9 % contre 5,75 % pour le client typique)** : « Votre risque est faible surtout grâce à vos très bonnes notes externes et à votre longue ancienneté professionnelle ; seuls votre niveau d'études et l'absence d'une des notes externes l'augmentent légèrement. »
 
 ## 8. Équité
 
