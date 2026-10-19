@@ -1,0 +1,43 @@
+# Paramètres du moteur ECL IFRS 9 : seule source des hypothèses expertes (docs/hypotheses_modele.md).
+# Changer une valeur ici suffit à recalculer l'ECL ; les variantes servent aux tests de sensibilité.
+
+reproductibilite:            # M7
+  graine: 42
+  part_test: 0.30
+  nb_plis: 5
+
+lgd:                         # M3
+  valeur: 0.45
+  sensibilite: [0.35, 0.55]
+
+ccf_cartes:                  # M4
+  valeur: 0.50
+  sensibilite: [0.30, 0.75]
+
+maturite_cartes_annees:      # M5
+  valeur: 3
+  sensibilite: [2, 5]
+
+staging:                     # M8
+  retard_stage2_jours: 30
+  pd_stage2: 0.20
+  sensibilite_pd_stage2: [0.15, 0.30]
+
+scenarios:                   # M6
+  central:     {poids: 0.60, multiplicateur_pd: 1.00}
+  defavorable: {poids: 0.25, multiplicateur_pd: 1.25}
+  favorable:   {poids: 0.15, multiplicateur_pd: 0.90}
+  sensibilite_multiplicateur_defavorable: [1.50]
+
+scorecard:
+  points_reference: 600      # score pour une cote de 50 bons pour 1 mauvais
+  cote_reference: 50
+  pdo: 20                    # points pour doubler la cote
+  iv_min: 0.02
+  iv_suspect: 0.50
+  correlation_max: 0.70
+
+variables_exclues:           # M9 et colonnes techniques
+  - client_id
+  - origine
+  - defaut_observe

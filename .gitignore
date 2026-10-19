@@ -31,3 +31,8 @@ tfplan
 
 # Fichier local créé par dbt
 dbt/**/.user.yml
+
+# Data Science : modèles et essais gérés par MLflow
+ds/mlruns/
+ds/mlflow.db
+.ipynb_checkpoints/
